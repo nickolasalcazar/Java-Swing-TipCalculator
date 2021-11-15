@@ -1,15 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.NumberFormatException;
 
 public class TipCalculator extends JFrame {
-	JTextField totalField;
-	JTextField tipPercentField;
-	JFormattedTextField newTotalField;
-	JButton calcBtn;
-	JButton quitBtn;
+	private JTextField totalField;
+	private JTextField percentField;
+	private JTextField newTotalField;
 
-
+	private JButton calcBtn;
+	private JButton quitBtn;
 
 	public static void main(String[] args) {
 		new TipCalculator();
@@ -34,17 +34,17 @@ public class TipCalculator extends JFrame {
 		// Original total input
 		gridConstraints.anchor = GridBagConstraints.WEST;
 
-		totalField = new JTextField("");
+		totalField = new JTextField("0.0");
 		gridConstraints.gridx = 2;
 		gridConstraints.gridy = 1;
 		totalField.setPreferredSize(new Dimension(100,30));
 		panel.add(totalField, gridConstraints);
 		
 		// Tip Percent input
-		tipPercentField = new JTextField("0.0");
+		percentField = new JTextField("0.0");
 		gridConstraints.gridy = 2;
-		tipPercentField.setPreferredSize(new Dimension(100,30));
-		panel.add(tipPercentField, gridConstraints);
+		percentField.setPreferredSize(new Dimension(100,30));
+		panel.add(percentField, gridConstraints);
 
 		// New total label
 		newTotalField = new JFormattedTextField("TOTAL");
@@ -59,6 +59,7 @@ public class TipCalculator extends JFrame {
 		calcBtn = new JButton("Calculate");
 		gridConstraints.gridy = 4;
 		calcBtn.setPreferredSize(new Dimension(100,30));
+		calcBtn.addActionListener(lForButton);
 		panel.add(calcBtn, gridConstraints);
 
 		// Quit button
@@ -78,8 +79,8 @@ public class TipCalculator extends JFrame {
 		panel.add(totalLabel, gridConstraints);
 
 		gridConstraints.gridy = 2;
-		JLabel tipPercentFieldLabel = new JLabel("Tip (%):");
-		panel.add(tipPercentFieldLabel, gridConstraints);
+		JLabel percentFieldLabel = new JLabel("Tip (%):");
+		panel.add(percentFieldLabel, gridConstraints);
 
 		gridConstraints.gridy = 3;
 		JLabel newTotalFieldLabel = new JLabel("Total + Tip:");
@@ -89,9 +90,36 @@ public class TipCalculator extends JFrame {
 		this.setVisible(true);
 	}
 
+	/**
+	 * Calculates and updates newTotalField. Alerts user if inputs are not
+	 * formatted correctly.
+	 */
+	private void doCalculate() {
+		boolean badTotal = false;
+		boolean badPercent = false;
+
+		try { float t = Float.parseFloat(totalField.getText()); }
+		catch (NumberFormatException e) { badTotal = true; }
+
+		try { float p = Float.parseFloat(percentField.getText()); }
+		catch (NumberFormatException e) { badPercent = true; }
+
+		if (badPercent && badTotal) {
+			JOptionPane.showMessageDialog(null,
+				"'Total' and 'Tip' must be numerical values");
+		} else if (badPercent && !badTotal) {
+			JOptionPane.showMessageDialog(null,
+				"'Tip' must be a numerical value");
+		} else if (!badPercent && badTotal) {
+			JOptionPane.showMessageDialog(null,
+				"'Total' must be a numerical value.");
+		}
+	}
+
 	private class ListenForButton implements ActionListener { 
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == quitBtn) System.exit(0);
+			else doCalculate();
 		}
 	}
 }
