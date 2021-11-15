@@ -97,11 +97,13 @@ public class TipCalculator extends JFrame {
 	private void doCalculate() {
 		boolean badTotal = false;
 		boolean badPercent = false;
+		double t = 0f;
+		double p = 0f;
 
-		try { float t = Float.parseFloat(totalField.getText()); }
+		try { t = Float.parseFloat(totalField.getText()); }
 		catch (NumberFormatException e) { badTotal = true; }
 
-		try { float p = Float.parseFloat(percentField.getText()); }
+		try { p = Float.parseFloat(percentField.getText()); }
 		catch (NumberFormatException e) { badPercent = true; }
 
 		if (badPercent && badTotal) {
@@ -114,6 +116,7 @@ public class TipCalculator extends JFrame {
 			JOptionPane.showMessageDialog(null,
 				"'Total' must be a numerical value.");
 		}
+		newTotalField.setText(Double.toString(t+t-t*(100-p)*Math.pow(10,-2)));
 	}
 
 	private class ListenForButton implements ActionListener { 
