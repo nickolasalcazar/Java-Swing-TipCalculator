@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class TipCalculator extends JFrame {
 	JTextField originalTotal;
@@ -21,14 +22,14 @@ public class TipCalculator extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 
+		ListenForButton lForButton = new ListenForButton();
+
 		GridBagConstraints gridConstraints = new GridBagConstraints();
 
 		gridConstraints.gridwidth = 1;
 		gridConstraints.gridheight = 1;
 
 		// Original total input
-		//gridConstraints.insets = new Insets(5,30,5,5);
-
 		gridConstraints.anchor = GridBagConstraints.WEST;
 
 		originalTotal = new JTextField("");
@@ -52,7 +53,6 @@ public class TipCalculator extends JFrame {
 		panel.add(newTotal, gridConstraints);
 
 		// Calculate button
-		//gridConstraints.anchor = GridBagConstraints.EAST;
 		gridConstraints.anchor = GridBagConstraints.CENTER;
 		calcBtn = new JButton("Calculate");
 		gridConstraints.gridy = 4;
@@ -61,6 +61,7 @@ public class TipCalculator extends JFrame {
 
 		// Quit button
 		quitBtn = new JButton("Quit");
+		quitBtn.addActionListener(lForButton);
 		gridConstraints.gridy = 5;
 		quitBtn.setPreferredSize(new Dimension(100,30));
 		panel.add(quitBtn, gridConstraints);
@@ -84,5 +85,11 @@ public class TipCalculator extends JFrame {
 
 		this.add(panel);
 		this.setVisible(true);
+	}
+
+	private class ListenForButton implements ActionListener { 
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == quitBtn) System.exit(0);
+		}
 	}
 }
