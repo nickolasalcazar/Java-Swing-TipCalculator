@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.NumberFormatException;
+import java.text.DecimalFormat;
 
 public class TipCalculator extends JFrame {
 	private JTextField totalField;
@@ -11,9 +12,7 @@ public class TipCalculator extends JFrame {
 	private JButton calcBtn;
 	private JButton quitBtn;
 
-	public static void main(String[] args) {
-		new TipCalculator();
-	}
+	public static void main(String[] args) { new TipCalculator(); }
 
 	public TipCalculator() {
 		this.setSize(250,225);
@@ -47,7 +46,7 @@ public class TipCalculator extends JFrame {
 		panel.add(percentField, gridConstraints);
 
 		// New total label
-		newTotalField = new JFormattedTextField("TOTAL");
+		newTotalField = new JFormattedTextField();
 		newTotalField.setEditable(false);
 		newTotalField.setForeground(Color.red);
 		gridConstraints.gridy = 3;
@@ -106,17 +105,19 @@ public class TipCalculator extends JFrame {
 		try { p = Float.parseFloat(percentField.getText()); }
 		catch (NumberFormatException e) { badPercent = true; }
 
-		if (badPercent && badTotal) {
+		if (badPercent && badTotal)
 			JOptionPane.showMessageDialog(null,
 				"'Total' and 'Tip' must be numerical values");
-		} else if (badPercent && !badTotal) {
+		else if (badPercent && !badTotal)
 			JOptionPane.showMessageDialog(null,
 				"'Tip' must be a numerical value");
-		} else if (!badPercent && badTotal) {
+		else if (!badPercent && badTotal)
 			JOptionPane.showMessageDialog(null,
 				"'Total' must be a numerical value.");
-		}
-		newTotalField.setText(Double.toString(t+t-t*(100-p)*Math.pow(10,-2)));
+
+		DecimalFormat df = new DecimalFormat("####.##");
+		String out = df.format(t+t-t*(100-p)*Math.pow(10,-2));
+		newTotalField.setText(out);
 	}
 
 	private class ListenForButton implements ActionListener { 
