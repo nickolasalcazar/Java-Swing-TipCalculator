@@ -3,11 +3,13 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class TipCalculator extends JFrame {
-	JTextField originalTotal;
-	JTextField tipPercent;
-	JFormattedTextField newTotal;
+	JTextField totalField;
+	JTextField tipPercentField;
+	JFormattedTextField newTotalField;
 	JButton calcBtn;
 	JButton quitBtn;
+
+
 
 	public static void main(String[] args) {
 		new TipCalculator();
@@ -32,25 +34,25 @@ public class TipCalculator extends JFrame {
 		// Original total input
 		gridConstraints.anchor = GridBagConstraints.WEST;
 
-		originalTotal = new JTextField("");
+		totalField = new JTextField("");
 		gridConstraints.gridx = 2;
 		gridConstraints.gridy = 1;
-		originalTotal.setPreferredSize(new Dimension(100,30));
-		panel.add(originalTotal, gridConstraints);
+		totalField.setPreferredSize(new Dimension(100,30));
+		panel.add(totalField, gridConstraints);
 		
 		// Tip Percent input
-		tipPercent = new JTextField("0.0");
+		tipPercentField = new JTextField("0.0");
 		gridConstraints.gridy = 2;
-		tipPercent.setPreferredSize(new Dimension(100,30));
-		panel.add(tipPercent, gridConstraints);
+		tipPercentField.setPreferredSize(new Dimension(100,30));
+		panel.add(tipPercentField, gridConstraints);
 
 		// New total label
-		newTotal = new JFormattedTextField("TOTAL");
-		newTotal.setEditable(false);
-		newTotal.setForeground(Color.red);
+		newTotalField = new JFormattedTextField("TOTAL");
+		newTotalField.setEditable(false);
+		newTotalField.setForeground(Color.red);
 		gridConstraints.gridy = 3;
-		newTotal.setPreferredSize(new Dimension(100,30));
-		panel.add(newTotal, gridConstraints);
+		newTotalField.setPreferredSize(new Dimension(100,30));
+		panel.add(newTotalField, gridConstraints);
 
 		// Calculate button
 		gridConstraints.anchor = GridBagConstraints.CENTER;
@@ -72,16 +74,16 @@ public class TipCalculator extends JFrame {
 
 		gridConstraints.gridx = 1;
 		gridConstraints.gridy = 1;
-		JLabel originalTotalLabel = new JLabel("Total:");
-		panel.add(originalTotalLabel, gridConstraints);
+		JLabel totalLabel = new JLabel("Total:");
+		panel.add(totalLabel, gridConstraints);
 
 		gridConstraints.gridy = 2;
-		JLabel tipPercentLabel = new JLabel("Tip (%):");
-		panel.add(tipPercentLabel, gridConstraints);
+		JLabel tipPercentFieldLabel = new JLabel("Tip (%):");
+		panel.add(tipPercentFieldLabel, gridConstraints);
 
 		gridConstraints.gridy = 3;
-		JLabel newTotalLabel = new JLabel("Total + Tip:");
-		panel.add(newTotalLabel, gridConstraints);
+		JLabel newTotalFieldLabel = new JLabel("Total + Tip:");
+		panel.add(newTotalFieldLabel, gridConstraints);
 
 		this.add(panel);
 		this.setVisible(true);
